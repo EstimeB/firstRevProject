@@ -3,7 +3,7 @@
 <suite name="Login">
     <test name="Smoke Testing">
         <classes>
-            <!-- <class name="com.revature.runners.BasicRunner"></class> -->
+             <class name="com.revature.runners.BasicRunner"></class>
         </classes>
     </test>
 </suite>
