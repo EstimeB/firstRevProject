@@ -8,13 +8,13 @@ import org.openqa.selenium.support.PageFactory;
 //This class will be used to reduce redundancy
 public class LoginPage {
 
-    @FindBy
-    public WebElement username;
+    @FindBy(xpath = "//input[@type='text']")
+    public WebElement usernameIput;
 
-    @FindBy
-    public WebElement password;
+    @FindBy(xpath = "//input[@type='password']")
+    public WebElement passwordInput;
 
-    @FindBy
+    @FindBy(xpath = "//button[text()='Login']")
     public WebElement loginbutton;
 
     public LoginPage(WebDriver driver) {
