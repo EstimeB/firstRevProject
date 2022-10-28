@@ -10,7 +10,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 //will link the feature files to the step implementation classes
-@CucumberOptions(features = "classpath:features", glue = "com.revature.stepimplementations")
+@CucumberOptions(features = "classpath:features",
+        glue = "com.revature.stepimplementations")
 public class BasicRunner extends AbstractTestNGCucumberTests {
 
     public static WebDriver driver;

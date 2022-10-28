@@ -17,7 +17,23 @@ public class LoginPage {
     @FindBy(xpath = "//button[text()='Login']")
     public WebElement loginbutton;
 
+    @FindBy(xpath = "//nav/p")
+    public WebElement name;
+
+    @FindBy(xpath = "//a[@href='/matrices']")
+    public WebElement matricesLink;
+
+    @FindBy(xpath = "//a[@href='/testcases']")
+    public WebElement testCasesLink;
+
+    @FindBy(xpath = "//a[@href='/defectreporter']")
+    public WebElement reportADefectLink;
+
+    @FindBy(xpath = "//a[@href='/defectoverview']")
+    public WebElement defectOverviewLink;
+
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
+
 }

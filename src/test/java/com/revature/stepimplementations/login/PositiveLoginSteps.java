@@ -1,4 +1,4 @@
-package com.revature.stepimplementations;
+package com.revature.stepimplementations.login;
 
 import com.revature.runners.BasicRunner;
 import io.cucumber.java.en.Given;
@@ -26,19 +26,24 @@ public class PositiveLoginSteps {
     }
     @Then("the employee should be on the role page")
     public void the_employee_should_be_on_the_role_page() throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         Assert.assertEquals(BasicRunner.driver.getCurrentUrl(),
                 "https://bugcatcher-jasdhir.coe.revaturelabs.com/managerhome");
     }
-    @Then("The employee should see their name <fname> <lname> on the home page")
+    @Then("The employee should see their name {string} {string} on the home page")
     public void the_employee_should_see_their_name_fname_lname_on_the_home_page(String expectedEmpFName, String expectedEmpLName) throws InterruptedException {
-//        Thread.sleep(1000);
-//        //String actualEmpFName =
-//        //String actualEmpLName =
-//        //String actualEmpName = BasicRunner.driver.switchTo();
-//
-//        String expectedEmpName = expectedEmpFName + expectedEmpLName;
-//        Assert.assertEquals(actualEmpName, expectedEmpName);
+        Thread.sleep(1000);
+
+        String nameString = BasicRunner.loginPage.name.getText();
+        String split[] = nameString.split(" ", 0);
+
+        String actualEmpFName = split[1];
+        String actualEmpLName = split[2];
+        String actualEmpName = actualEmpFName + " " + actualEmpLName;
+
+        String expectedEmpName = expectedEmpFName + " "  + expectedEmpLName;
+
+        Assert.assertEquals(actualEmpName, expectedEmpName);
     }
 
 }

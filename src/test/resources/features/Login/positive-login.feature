@@ -6,7 +6,7 @@ Feature: Login
     When The employee types "chomp!" into password input
     When The employee clicks on the login button
     Then the employee should be on the role page
-    Then The employee should see their name <fname> <lname> on the home page
+    Then The employee should see their name "Patty" "Pastiche" on the home page
 
   Scenario Outline:
 
