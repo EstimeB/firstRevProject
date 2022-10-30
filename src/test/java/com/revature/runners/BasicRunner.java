@@ -1,6 +1,7 @@
 package com.revature.runners;
 
 import com.revature.pages.LoginPage;
+import com.revature.pages.MatrixPage;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -17,6 +18,8 @@ public class BasicRunner extends AbstractTestNGCucumberTests {
     public static WebDriver driver;
     public static LoginPage loginPage;
 
+    public static MatrixPage matrixPage;
+
     //methods bellow are used to reduce redundancy
     @BeforeMethod
     public void setup() {
@@ -32,6 +35,7 @@ public class BasicRunner extends AbstractTestNGCucumberTests {
         // & initialize the web elements, passing in ...
         loginPage = new LoginPage(driver);
 
+        matrixPage= new MatrixPage(driver);
     }
 
     //will run after each Cucumber scenario to close the driver
