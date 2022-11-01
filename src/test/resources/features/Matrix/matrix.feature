@@ -14,10 +14,10 @@ Feature: Matrix
     Given A manager or tester has selected a matrix
     When A manager or tester adds or removes defects
     When A manager or tester confirms their changes
-    Then Then the matrix should saved
+    Then Then the changes to the defects should saved
 
   Scenario: Update Test Cases
     Given A manager or tester has selected a matrix
     When A manager or tester adds or removes Test Cases
     When A manager or tester confirms their changes
-    Then Then the matrix should saved
+    Then Then the changes to the test cases should saved

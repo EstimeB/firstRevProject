@@ -34,7 +34,7 @@ public class MatrixPage {
     @FindBy(xpath = "//button[text()='Create Matrix']")
     public WebElement createMatrixBtn;
 
-    @FindBy(xpath = "//ul/li/input[@list='testlist']")
+    @FindBy(xpath = "//h3[contains(text(), 'Test Case IDs')]/following::input[@list= 'testlist']")
     public WebElement testCaseInput;
 
     @FindBy(xpath = "//h3[contains(text(), 'Test Case IDs')]/following::button[text()= 'Add'][1]")
@@ -43,7 +43,7 @@ public class MatrixPage {
 //    @FindBy(xpath = "//h3[contains(text(), 'Test Case IDs')]/following::button[1]")
 //    public WebElement removeTestCaseBtn;
 
-    @FindBy(xpath = "//ul/li/input[@list='defectlist']")
+    @FindBy(xpath = "//h3[contains(text(), 'Defect IDs')]/following::input[@list= 'defectlist']")
     public WebElement defectInput;
 
     @FindBy(xpath = "//h3[contains(text(), 'Test Case IDs')]/following::button[2]")
@@ -51,6 +51,9 @@ public class MatrixPage {
 
     @FindBy(xpath = "//div/button[text()='Save Requirements']")
     public WebElement saveRequirementBtn;
+
+    @FindBy(xpath = "//button[text()='Edit']")
+    public WebElement editMatrice;
 
     public MatrixPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
