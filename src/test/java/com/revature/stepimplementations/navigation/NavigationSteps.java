@@ -48,10 +48,10 @@ public class NavigationSteps {
 
         Assert.assertEquals(actualPageTitle, expectedPageTitle);
     }
-//    @When("The manager clicks the browser back button")
-//    public void the_manager_clicks_the_browser_back_button() {
-//        //BasicRunner.
-//    }
+    @When("The manager clicks the browser back button")
+    public void the_manager_clicks_the_browser_back_button() {
+        BasicRunner.driver.navigate().back();
+    }
     @Then("The manager should be on the home page and the title of page is {string}")
     public void the_manager_should_be_on_the_home_page_and_the_title_of_page_is_home(String expectedTitle) throws InterruptedException {
         String actualTitle = BasicRunner.driver.getTitle();

@@ -46,7 +46,7 @@ public class MatrixPage {
     @FindBy(xpath = "//h3[contains(text(), 'Defect IDs')]/following::input[@list= 'defectlist']")
     public WebElement defectInput;
 
-    @FindBy(xpath = "//h3[contains(text(), 'Test Case IDs')]/following::button[2]")
+    @FindBy(xpath = "//h3[contains(text(), 'Defect IDs')]/following::button[text()= 'Add'][1]")
     public WebElement addDefectBtn;
 
     @FindBy(xpath = "//div/button[text()='Save Requirements']")

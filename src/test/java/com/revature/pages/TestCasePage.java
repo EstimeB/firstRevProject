@@ -16,10 +16,10 @@ public class TestCasePage {
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement testCaseSubmitBtn;
 
-    @FindBy(xpath = "//button[text()='Details']")
+    @FindBy(xpath = "//*[@id='root']/table/tbody/tr/td[text()='Verify that usernames cannot have illegal characters']/following::button[text()='Details']")
     public WebElement detailsBtn;
 
-    @FindBy(xpath = "//button[text()='Close']")
+    @FindBy(xpath = "/html/body/div[3]/div/div/button[1]")
     public WebElement closeButton;
 
     @FindBy(xpath = "//button/a[@href='/caseeditor/801']")
