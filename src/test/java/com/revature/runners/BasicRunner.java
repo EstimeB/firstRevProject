@@ -28,6 +28,8 @@ public class BasicRunner extends AbstractTestNGCucumberTests {
 
     public static TestCasePage testCasePage;
 
+    public static String assignedDefectId;
+
     //methods bellow are used to reduce redundancy
     @BeforeMethod
     public void setup() {
