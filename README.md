@@ -2,17 +2,23 @@
 
 <details>
 <summary>Table Of Contents</summary>
-[About The Project](#About-The-Project)
-[Built With](#Built-With)
-[Getting Started](#Getting-Started)
-[Prerequisites](#Prerequisites)
-[Installation](#Installation)
-[Usage](#Usage)
-[Roadmap](#Roadmap)
-[Contributing](#contributing)
-[License](#license)
-[Contact](#Contact)
-[Acknowledgements](#Acknowledgements)
+<ol dir="auto">
+<li>About The Project<a href="#About-The-Project"></a></li>
+<ul dir="auto">
+<li>Built With<a href="#Built-With"></a></li>
+</ul>
+<li>Getting Started<a href="#Getting-Started"></a></li>
+<ul dir="auto">
+<li>Prerequisites<a href="#Prerequisites"></a></li>
+<li>Installation<a href="#Installation"></a></li>
+</ul>
+<li>Usage<a href="#Usage"></a></li>
+<li>Roadmap<a href="#Roadmap"></a></li>
+<li>Contributing<a href="#contributing"></a></li>
+<li>License<a href="#license"></a></li>
+<li>Contact<a href="#Contact"></a></li>
+<li>Acknowledgements<a href="#Acknowledgements"></a></li>
+</ol>
 </details>
 
 ### About The Project
