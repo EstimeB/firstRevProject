@@ -24,11 +24,11 @@ public class PositiveLoginSteps {
     public void the_employee_clicks_on_the_login_button() {
         BasicRunner.loginPage.loginbutton.click();
     }
-    @Then("the employee should be on the role page")
-    public void the_employee_should_be_on_the_role_page() throws InterruptedException {
+    @Then("the employee should be on the {string} page")
+    public void the_employee_should_be_on_the_role_page(String expectedPageRole) throws InterruptedException {
         Thread.sleep(1000);
-        Assert.assertEquals(BasicRunner.driver.getCurrentUrl(),
-                "https://bugcatcher-jasdhir.coe.revaturelabs.com/managerhome");
+        String actualPageRole = BasicRunner.driver.getTitle().trim().replaceFirst("Home", "");
+        Assert.assertEquals(actualPageRole, expectedPageRole);
     }
     @Then("The employee should see their name {string} {string} on the home page")
     public void the_employee_should_see_their_name_fname_lname_on_the_home_page(String expectedEmpFName, String expectedEmpLName) throws InterruptedException {

@@ -9,8 +9,9 @@ import org.testng.Assert;
 public class NavigationSteps {
 
     @Given("The manager is logged in as a manager")
-    public void the_manager_is_logged_in_as_a_manager() {
+    public void the_manager_is_logged_in_as_a_manager() throws InterruptedException {
         BasicRunner.driver.get("https://bugcatcher-jasdhir.coe.revaturelabs.com/?dev=2");
+        Thread.sleep(1000);
         BasicRunner.loginPage.usernameIput.sendKeys("g8tor");
         BasicRunner.loginPage.passwordInput.sendKeys("chomp!");
         BasicRunner.loginPage.loginbutton.click();

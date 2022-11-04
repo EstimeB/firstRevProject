@@ -16,12 +16,10 @@ Feature: Navigation
     When The manager clicks the browser back button
     Then The manager should be on the home page and the title of page is "Home"
 
-  Scenario: All Links Viable
+  Scenario Outline: All Links Viable
     Then The manager should see links for "Matrices", "Test Cases", "Report a Defect" and "Defect Overview"
-    When The manager clicks on "Matrices"
-    Then The title of page should be "Matrix Overview"
-
-  Scenario Outline:
+    When The manager clicks on "<link>"
+    Then The title of page should be "<title>"
 
     Examples:
       | link           | title               |
