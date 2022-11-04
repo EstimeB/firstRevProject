@@ -19,6 +19,6 @@ Feature: Defect Reporting
     When The employee clicks the report button
     Then There should be a confirmation box
     When The employee clicks Ok
-    Then A modal should appear with a "Defect" ID
+    Then A modal should appear with a defect ID
     When The employee clicks close
     Then The modal should disappear

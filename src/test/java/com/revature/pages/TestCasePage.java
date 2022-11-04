@@ -16,13 +16,13 @@ public class TestCasePage {
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement testCaseSubmitBtn;
 
-    @FindBy(xpath = "//*[@id='root']/table/tbody/tr/td[text()='Verify that usernames cannot have illegal characters']/following::button[text()='Details']")
+    @FindBy(xpath = "//tr[last()]/td[4]")
     public WebElement detailsBtn;
 
     @FindBy(xpath = "/html/body/div[3]/div/div/button[1]")
     public WebElement closeButton;
 
-    @FindBy(xpath = "//button/a[@href='/caseeditor/801']")
+    @FindBy(xpath = "//button/a[text()='Edit']")
     public WebElement editButton;
 
     @FindBy(xpath = "//button[text()='Edit']")
@@ -31,13 +31,7 @@ public class TestCasePage {
     @FindBy(xpath = "//input[@type='checkbox']")
     public WebElement automateCheckMark;
 
-    //@FindBy()
-    //public WebElement selectTesterBtn; //select elements, add into array, then loop through to select randomly
-
-    //@FindBy()
-    //public WebElement selectTestResultBtn;
-
-    @FindBy(xpath = "//textarea[text()='No issues']")
+    @FindBy(xpath = "//fieldset[2]/textarea")
     public WebElement summaryTextArea;
 
     @FindBy(xpath = "//button[text()='Save']")

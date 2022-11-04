@@ -12,6 +12,7 @@ import org.testng.Assert;
 
 import java.util.List;
 
+import static com.revature.runners.BasicRunner.driver;
 import static com.revature.runners.BasicRunner.wait;
 
 public class TestCaseSteps {
@@ -19,9 +20,10 @@ public class TestCaseSteps {
     public static Alert alert;
     public static String descRTC;
     public static String stepsRTC;
+    public static int caseId;
     @Given("The tester is on the test case dashboard")
     public void the_tester_is_on_the_test_case_dashboard() throws InterruptedException {
-        BasicRunner.driver.get("https://bugcatcher-jasdhir.coe.revaturelabs.com/?dev=2");
+        driver.get("https://bugcatcher-jasdhir.coe.revaturelabs.com/?dev=2");
         BasicRunner.loginPage.usernameIput.sendKeys("ryeGuy");
         BasicRunner.loginPage.passwordInput.sendKeys("coolbeans");
         BasicRunner.loginPage.loginbutton.click();
@@ -42,58 +44,60 @@ public class TestCaseSteps {
         BasicRunner.testCasePage.testCaseSubmitBtn.click();
     }
     @Then("The test case should appear at the bottom of the table")
-    public void the_test_case_should_appear_at_the_bottom_of_the_table() {
-        BasicRunner.wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//*[@id='root']/table/tbody/tr/td")));
-        List<WebElement> testCases = BasicRunner.driver.findElements(
-                By.xpath("//*[@id='root']/table/tbody/tr/td"));
-
-        String expectedDescription = "Verify that usernames cannot have illegal characters";
+    public void the_test_case_should_appear_at_the_bottom_of_the_table() throws InterruptedException {
+        String expectedRes = "Verify that usernames cannot have illegal characters";
         String actualRes;
-        String tcText;
 
-        for (WebElement tc: testCases) {
-            tcText = tc.getText();
-            if (tcText.equals(expectedDescription)) {
-                actualRes = tcText;
-                Assert.assertEquals(actualRes, expectedDescription);
-                break;
-            }
+        try {
+            driver.findElement(
+                    By.xpath("//tr[last()]/td[2]")).getText();
+            driver.findElement(
+                    By.xpath("//tr[last()]/td[1]")).getText();
+        } catch (org.openqa.selenium.StaleElementReferenceException e) {
+            //to check if the test case was successfully created
+            BasicRunner.wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//tr[last()]/td[2]")));
+            actualRes = driver.findElement(
+                    By.xpath("//tr[last()]/td[2]")).getText();
+
+            Assert.assertEquals(actualRes, expectedRes);
+            BasicRunner.wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//tr[last()]/td[1]")));
         }
-
+        //to find and store the new created test case's id for later use
+        Thread.sleep(1000);
+        caseId = Integer.parseInt(driver.findElement(
+                By.xpath("//tr[last()]/td[1]")).getText());
     }
     @Then("The test case result should say {string}")
     public void the_test_case_result_should_say_unexecuted(String expectedResult) {
-        WebElement testCase = BasicRunner.driver.findElement(
-        By.xpath
-    (
-    "//*[@id='root']/table/tbody/tr/td[text()='Verify that usernames cannot have illegal characters']/following::td[text()='UNEXECUTED']"));
+        WebElement testCase = driver.findElement(
+                By.xpath
+                        ("//tr[last()]/td[3]"));
         String actualResult = testCase.getText();
 
-
         Assert.assertEquals(actualResult, expectedResult);
-
     }
     @When("The tester presses on details")
     public void the_tester_presses_on_details() {
-
-
         BasicRunner.testCasePage.detailsBtn.click();
     }
     @Then("A test case modal should appear showing the {string} ID")
-    public void a_test_case_modal_should_appear_showing_the_case_id(String expectedCaseId) {
-        WebElement  atci = BasicRunner.driver.findElement(
-                By.xpath("/html/body/div[3]/div/div/h3"));
-        String actualTestCaseId = atci.getText();
+    public void a_test_case_modal_should_appear_showing_the_case_id(String string) throws InterruptedException {
+        Thread.sleep(1000);
+        String  actualTestCaseId = driver.findElement(
+                By.xpath("//h3[1]")).getText();
+
+        String expectedCaseId = string +" " + caseId;
 
         Assert.assertEquals(actualTestCaseId, expectedCaseId);
-
     }
     @Then("The performed by field should say {string}")
     public void the_performed_by_field_should_say_no_one(String expectedText) {
-
-        WebElement at = BasicRunner.driver.findElement(
-                By.xpath("/html/body/div[3]/div/div/p[6]"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
+                ("//div[3]/div/div/h4[text()='Performed By']/following::p")));
+        WebElement at = driver.findElement(
+                By.xpath("//div[3]/div/div/h4[text()='Performed By']/following::p"));
         String actualText = at.getText();
 
         Assert.assertEquals(actualText, expectedText);
@@ -102,41 +106,48 @@ public class TestCaseSteps {
     public void the_tester_presses_the_close_buttton() {
         BasicRunner.testCasePage.closeButton.click();
     }
+    public static String actualRes;
     @Then("The Modal Should be closed")
-    public void the_modal_should_be_closed() throws org.openqa.selenium.StaleElementReferenceException {
+    public void the_modal_should_be_closed() {
+        // if the findElements() method where to return/added multiple elements to the list
+        //that would mean that the modal is still open
+        List<WebElement> el = driver.findElements(By.xpath("/html/body/div[2]"));
 
-//        String actualRes;
-//        //location to the closed modal div
-//        String expectedRes = "/html/body/div[2]";
-//        try {
-//            BasicRunner.driver.findElement(By.xpath("/html/body/div[3]/div/div"));
-//        } catch (org.openqa.selenium.StaleElementReferenceException e) {
-//            e.printStackTrace();
-//            actualRes = "/html/body/div[2]";
-//            Assert.assertEquals(actualRes, expectedRes);
-//        }
+        for (WebElement ar: el) {
+            String arstr = ar.getAttribute("class=\"ReactModalPortal\"");
+            actualRes =arstr;
+        }
+        System.out.println(actualRes);
+        String expectedRes = null;
+        //if the modal is closed, this would be the element that would return from the fetch
+
+        Assert.assertEquals(actualRes, expectedRes);
     }
+
     //scenario 2
     @When("The tester clicks on details")
     public void the_tester_clicks_on_details() throws InterruptedException {
         Thread.sleep(1000);
-        BasicRunner.testCasePage.detailsBtn.click(); /////
-    }
-    @When("The Tester clicks on edit within the modal")
-    public void the_tester_clicks_on_edit_within_the_modal() {
-        BasicRunner.testCasePage.editButton.click();
+        BasicRunner.testCasePage.detailsBtn.click();
     }
     @Then("The Tester should be on the {string} for that case")
     public void the_tester_should_be_on_the_Case_Editor_for_that_case(String expectedPageTitle) {
-        String actualPageTitle = BasicRunner.driver.getTitle();
+        String actualPageTitle = driver.getTitle();
         Assert.assertEquals(actualPageTitle, expectedPageTitle);
+    }
+    @When("The Tester clicks on edit within the modal")
+    public void the_tester_clicks_on_edit_within_the_modal() throws InterruptedException {
+        Thread.sleep(900);
+        BasicRunner.testCasePage.editButton.click();
     }
     @Then("The fields should be uneditable")
     public void the_fields_should_be_uneditable() {
-        WebElement descFieldsStatus = (WebElement) BasicRunner.driver.findElement(
-                By.xpath("//*[@id='root']/fieldset[1]/textarea[1]"));
-        String actualFieldsStatus  = descFieldsStatus.getAttribute("disabled");
-        String expectedFieldsStatus = "disabled";
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
+                ("//fieldset[1]/textarea[1]")));
+        String actualFieldsStatus = driver.findElement(
+                By.xpath("//fieldset[1]/textarea[1]"))
+                .getAttribute("disabled");
+        String expectedFieldsStatus = "true";
 
         Assert.assertEquals(actualFieldsStatus, expectedFieldsStatus);
     }
@@ -146,7 +157,7 @@ public class TestCaseSteps {
     }
     @Then("The test case fields should be editable")
     public void the_test_case_fields_should_be_editable() {
-        WebElement fieldsStatus = BasicRunner.driver.findElement(
+        WebElement fieldsStatus = driver.findElement(
                 By.xpath("//*[@id='root']/fieldset[1]/textarea"));
         String actualFieldsStatus  = fieldsStatus.getAttribute("disabled");
         String expectedFieldsStatus = null;
@@ -155,18 +166,18 @@ public class TestCaseSteps {
     }
     @When("The tester types in a new description into the description text area")
     public void the_tester_types_in_a_new_description_into_the_description_text_area() {
-        descRTC = BasicRunner.driver.findElement(By.xpath
-                ("//*[@id='root']/fieldset[1]/textarea[1]")).getText();
-        BasicRunner.driver.findElement(By.xpath
-                ("//*[@id='root']/fieldset[1]/textarea[1]"))
+        descRTC = driver.findElement(By.xpath
+                ("//fieldset[1]/textarea[1]")).getText();
+        driver.findElement(By.xpath
+                ("//fieldset[1]/textarea[1]"))
                 .sendKeys("Modify that username to fit the criteria");
     }
     @When("The tester types in a new steps into the steps text area")
     public void the_tester_types_in_a_new_steps_into_the_steps_text_area() {
-        stepsRTC = BasicRunner.driver.findElement(By.xpath
-                ("//*[@id='root']/fieldset[1]/textarea[1]")).getText();
-        BasicRunner.driver.findElement(By.xpath
-                        ("//*[@id='root']/fieldset[1]/textarea[1]"))
+        stepsRTC = driver.findElement(By.xpath
+                ("//fieldset[1]/textarea[2]")).getText();
+        driver.findElement(By.xpath
+                        ("//fieldset[1]/textarea[2]"))
                 .sendKeys("""
         1. Go to create a new account page
         2. create One or several users with each username having 1 illegal character
@@ -178,9 +189,10 @@ public class TestCaseSteps {
     }
     @When("The tester selects ryeGuy for performed from drop down")
     public void the_tester_selects_rye_guy_for_performed_from_drop_down() {
-        List<WebElement> performedDropDownMenu = BasicRunner.driver
-                .findElements(By.xpath("//*[@id='root']/fieldset[1]/select"));
+        List<WebElement> performedDropDownMenu = driver
+                .findElements(By.xpath("//fieldset[1]/select/option"));
         String pddmText;
+
         for (WebElement pddm: performedDropDownMenu) {
             pddmText = pddm.getText();
             if (pddmText.equals("ryeGuy")) {
@@ -191,9 +203,10 @@ public class TestCaseSteps {
     }
     @When("The tester selects FAIL for test result from drop down")
     public void the_tester_selects_fail_for_test_result_from_drop_down() {
-        List<WebElement> testResultDropDownMenu = BasicRunner.driver
-                .findElements(By.xpath("//*[@id='root']/fieldset[2]/select"));
+        List<WebElement> testResultDropDownMenu = driver
+                .findElements(By.xpath("//fieldset[2]/select/option"));
         String trddmText;
+
         for (WebElement trddm: testResultDropDownMenu) {
             trddmText = trddm.getText();
             if (trddmText.equals("FAIL")) {
@@ -213,21 +226,25 @@ public class TestCaseSteps {
     }
     @Then("A confirmation prompt should appear")
     public void a_confirmation_prompt_should_appear() {
-        alert = BasicRunner.driver.switchTo().alert();
+        alert = driver.switchTo().alert();
     }
     @When("The tester clicks on Ok")
     public void the_tester_clicks_on_ok() {
         alert.accept();
     }
     @Then("An alert says the {string}")
-    public void an_alert_says_the_Test_Case_has_been_Saved(String expectedAlertText) {
-        String actualAlertText = BasicRunner.driver.switchTo().alert().getText();
+    public void an_alert_says_the_Test_Case_has_been_Saved(String expectedAlertText) throws InterruptedException {
+        Thread.sleep(1000);
+        Alert alrt = driver.switchTo().alert();
+        String actualAlertText = alrt.getText();
         Assert.assertEquals(actualAlertText, expectedAlertText);
+        alrt.accept();
     }
+
     //scenarion 3
     @Given("the tester is on the test case editor for a specific test case")
     public void the_tester_is_on_the_test_case_editor_for_a_specific_test_case() throws InterruptedException {
-        BasicRunner.driver.get("https://bugcatcher-jasdhir.coe.revaturelabs.com/?dev=2");
+        driver.get("https://bugcatcher-jasdhir.coe.revaturelabs.com/?dev=2");
         BasicRunner.loginPage.usernameIput.sendKeys("ryeGuy");
         BasicRunner.loginPage.passwordInput.sendKeys("coolbeans");
         BasicRunner.loginPage.loginbutton.click();
@@ -235,44 +252,40 @@ public class TestCaseSteps {
         Thread.sleep(1000);
         BasicRunner.loginPage.testCasesLink.click();
 
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
-//                ("//*[@id='root']/nav/a[2][text()='Test Cases']"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
-                ("//*[@id='root']/table/tbody/tr[1]/td[4]/button"))).click();
+                ("//table/tbody/tr[last()]/td[4]/button[text()='Details']"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
-                ("/html/body/div[3]/div/div/button[2]"))).click();
+                ("//button/a[text()='Edit']"))).click();
     }
     @Then("The fields should be uneditable for test case reset")
     public void The_fields_should_be_uneditable_for_test_case_reset() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
-                ("//*[@id='root']/fieldset[1]/textarea[1]")));
-        WebElement descFieldsStatus = BasicRunner.driver.findElement(
-                By.xpath("//*[@id='root']/fieldset[1]/textarea[1]"));
-        String actualFieldsStatus  = descFieldsStatus.getAttribute("disabled");
-        String expectedFieldsStatus = "disabled";
+                ("//fieldset[1]/textarea[1]")));
+        String actualFieldsStatus = driver.findElement(
+                By.xpath("//fieldset[1]/textarea[1]")).getAttribute("disabled");
+        String expectedFieldsStatus = "true";
 
         Assert.assertEquals(actualFieldsStatus, expectedFieldsStatus);
-
     }
     @When("The Tester clicks on the edit button")
     public void the_tester_clicks_on_the_edit_button() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
-                ("//*[@id='root']/button"))).click();
+                ("//button[text()='Edit']"))).click();
     }
     @When("The tester clicks on the reset button")
     public void the_tester_clicks_on_the_reset_button() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
-                ("//*[@id='root']/button[1]"))).click();
+                ("//button[text()='Reset']"))).click();
     }
     @Then("The fields should be populated to their old values")
     public void the_fields_should_be_populated_to_their_old_values() {
         String expectedValues = descRTC  + "" +
                 stepsRTC;
 
-        String actDescRTC = BasicRunner.driver.findElement(By.xpath
-                ("//*[@id='root']/fieldset[1]/textarea[1]")).getText();
-        String actStepRTC = BasicRunner.driver.findElement(By.xpath
-                ("//*[@id='root']/fieldset[1]/textarea[2]")).getText();
+        String actDescRTC = driver.findElement(By.xpath
+                ("//fieldset[1]/textarea[1]")).getText();
+        String actStepRTC = driver.findElement(By.xpath
+                ("//fieldset[1]/textarea[2]")).getText();
         String actualValues = actDescRTC + "" +
                 actStepRTC;
 

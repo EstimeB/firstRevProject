@@ -25,7 +25,9 @@ public class NavigationSteps {
         Assert.assertEquals(actualPage, expectedPage);
     }
     @Then("The manager should see links for {string}, {string}, {string} and {string}")
-    public void the_manager_should_see_links_for_matrices_test_cases_defect_reporting_and_defect_overview(String matrice, String testCase, String reportADefect, String defectOverview) throws InterruptedException {
+    public void the_manager_should_see_links_for_matrices_test_cases_defect_reporting_and_defect_overview(
+            String matrice, String testCase, String reportADefect, String defectOverview)
+            throws InterruptedException {
         Thread.sleep(1000);
 
         String actualLinks[] = {String.valueOf(BasicRunner.loginPage.matricesLink.getText()),
@@ -41,7 +43,8 @@ public class NavigationSteps {
         BasicRunner.loginPage.matricesLink.click();
     }
     @Then("The title of the page should be {string}")
-    public void the_title_of_the_page_should_be_matrix_page(String expectedPageTitle) throws InterruptedException {
+    public void the_title_of_the_page_should_be_matrix_page(String expectedPageTitle)
+            throws InterruptedException {
         Thread.sleep(1000);
 
         String actualPageTitle = BasicRunner.driver.getTitle();
@@ -53,7 +56,8 @@ public class NavigationSteps {
         BasicRunner.driver.navigate().back();
     }
     @Then("The manager should be on the home page and the title of page is {string}")
-    public void the_manager_should_be_on_the_home_page_and_the_title_of_page_is_home(String expectedTitle) throws InterruptedException {
+    public void the_manager_should_be_on_the_home_page_and_the_title_of_page_is_home(
+            String expectedTitle) throws InterruptedException {
         String actualTitle = BasicRunner.driver.getTitle();
 
         if (actualTitle.contains(expectedTitle)) {

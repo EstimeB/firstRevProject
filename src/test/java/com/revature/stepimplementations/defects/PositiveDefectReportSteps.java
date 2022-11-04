@@ -6,12 +6,19 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+
+import java.util.List;
+
+import static com.revature.runners.BasicRunner.driver;
+import static com.revature.runners.BasicRunner.wait;
 
 public class PositiveDefectReportSteps {
 
     public static Alert alert;
+    public static String defectId;
     @Given("The employee is on the Defect Reporter Page")
     public void the_employee_is_on_the_defect_reporter_page() throws InterruptedException {
         BasicRunner.driver.get("https://bugcatcher-jasdhir.coe.revaturelabs.com/?dev=2");
@@ -21,7 +28,6 @@ public class PositiveDefectReportSteps {
 
         Thread.sleep(1000);
         BasicRunner.loginPage.reportADefectLink.click();
-
     }
     @When("The employee selects todays date")
     public void the_employee_selects_todays_date() {
@@ -41,20 +47,18 @@ public class PositiveDefectReportSteps {
     }
     @When("The employee selects high priority")
     public void the_employee_selects_high_priority() {
-        Select priorityLevel = new Select(BasicRunner.driver.findElement(
-                By.xpath("//*[@id='defectReport']/input[3]")));
-        priorityLevel.selectByVisibleText("High");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
+                ("//input[3]"))).sendKeys("High");
     }
     @When("The employee selects low severity")
     public void the_employee_selects_low_severity() {
-        Select severityLevel = new Select(BasicRunner.driver.findElement(
-                By.xpath("//*[@id='defectReport']/input[2]")));
-        severityLevel.selectByVisibleText("LOW");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
+                ("//input[2]"))).sendKeys("LOW");
     }
     @When("The employee clicks the report button")
     public void the_employee_clicks_the_report_button() {
         BasicRunner.driver.findElement(By.xpath
-                ("//*[@id='defectReport']/button")).click();
+                ("//button[text()='Report']")).click();
     }
     @Then("There should be a confirmation box")
     public void there_should_be_a_confirmation_box() {
@@ -63,21 +67,42 @@ public class PositiveDefectReportSteps {
     @When("The employee clicks Ok")
     public void the_employee_clicks_ok() {
         alert.accept();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
+                ("//h4")));
+        defectId = BasicRunner.driver.findElement(By.xpath
+                ("//h4")).getText();
     }
-    @Then("A modal should appear with a {string} ID")
-    public void a_modal_should_appear_with_a_defect_id(String expectedResult) {
+    @Then("A modal should appear with a defect ID")
+    public void a_modal_should_appear_with_a_defect_id() {
+        String expectedResult = defectId;
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath
+                ("//h4")));
         String actualResult = BasicRunner.driver.findElement(By.xpath
-                ("/html/body/div[3]/div/div/h4/text()[1]")).getText();
+                ("//h4")).getText();
 
         Assert.assertEquals(actualResult, expectedResult);
     }
     @When("The employee clicks close")
     public void the_employee_clicks_close() {
         BasicRunner.driver.findElement(By.xpath
-                ("/html/body/div[3]/div/div/button")).click();
+                ("//button[text()='Close']")).click();
     }
+    public static String actualRes;
     @Then("The modal should disappear")
     public void the_modal_should_disappear() {
+        // if the findElements() method where to return/added multiple elements to the list
+        //that would mean that the modal is still open
+        List<WebElement> el = driver.findElements(By.xpath("//div[2]"));
 
+        for (WebElement ar: el) {
+            String arstr = ar.getAttribute("class=\"ReactModalPortal\"");
+            actualRes =arstr;
+        }
+        System.out.println(actualRes);
+        String expectedRes = null;
+        //if the modal is closed, this would be the element that would return from the fetch
+
+        Assert.assertEquals(actualRes, expectedRes);
     }
 }
