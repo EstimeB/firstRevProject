@@ -2,17 +2,17 @@
 
 <details>
 <summary>Table Of Contents</summary>
-* [About The Project](#About-The-Project)
-  * [Built With](#Built-With)
-* [Getting Started](#Getting-Started)
-  * [Prerequisites](#Prerequisites)
-  * [Installation](#Installation)
-* [Usage](#Usage)
-* [Roadmap](#Roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#Contact)
-* [Acknowledgements](#Acknowledgements)
+[About The Project](#About-The-Project)
+[Built With](#Built-With)
+[Getting Started](#Getting-Started)
+[Prerequisites](#Prerequisites)
+[Installation](#Installation)
+[Usage](#Usage)
+[Roadmap](#Roadmap)
+[Contributing](#contributing)
+[License](#license)
+[Contact](#Contact)
+[Acknowledgements](#Acknowledgements)
 </details>
 
 ### About The Project
