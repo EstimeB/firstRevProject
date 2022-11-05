@@ -3,21 +3,21 @@
 <details>
 <summary>Table Of Contents</summary>
 <ol dir="auto">
-<li>About The Project<a href="#About-The-Project"></a></li>
+<li type="I"><a href="#about-the-project">About The Project</a></li>
 <ul dir="auto">
-<li>Built With<a href="#Built-With"></a></li>
+<li><a href="#built-with">Built With</a></li>
 </ul>
-<li>Getting Started<a href="#Getting-Started"></a></li>
+<li type="I"><a href="#getting-started">Getting Started</a></li>
 <ul dir="auto">
-<li>Prerequisites<a href="#Prerequisites"></a></li>
-<li>Installation<a href="#Installation"></a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#installation">Installation</a></li>
 </ul>
-<li>Usage<a href="#Usage"></a></li>
-<li>Roadmap<a href="#Roadmap"></a></li>
-<li>Contributing<a href="#contributing"></a></li>
-<li>License<a href="#license"></a></li>
-<li>Contact<a href="#Contact"></a></li>
-<li>Acknowledgements<a href="#Acknowledgements"></a></li>
+<li type="I"><a href="#usage">Usage</a></li>
+<li type="I"><a href="#roadmap">Roadmap</a></li>
+<li type="I"><a href="#contributing">Contributing</a></li>
+<li type="I"><a href="#license">License</a></li>
+<li type="I"><a href="#contact">Contact</a></li>
+<li type="I"><a href="#acknowledgements">Acknowledgements</a></li>
 </ol>
 </details>
 
