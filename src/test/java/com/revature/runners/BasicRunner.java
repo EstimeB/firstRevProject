@@ -2,6 +2,7 @@ package com.revature.runners;
 
 import com.revature.pages.LoginPage;
 import com.revature.pages.MatrixPage;
+import com.revature.pages.RepetitiveMethodsLinksSnippetsOfCode;
 import com.revature.pages.TestCasePage;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
@@ -15,19 +16,16 @@ import org.testng.annotations.BeforeMethod;
 import java.time.Duration;
 
 //will link the feature files to the step implementation classes
-@CucumberOptions(features = "classpath:features",
+@CucumberOptions(features = "classpath:features/Navigation",
         glue = "com.revature.stepimplementations")
 public class BasicRunner extends AbstractTestNGCucumberTests {
 
     public static WebDriver driver;
-
     public static WebDriverWait wait;
+    public static RepetitiveMethodsLinksSnippetsOfCode repetitiveMLSoC;
     public static LoginPage loginPage;
-
     public static MatrixPage matrixPage;
-
     public static TestCasePage testCasePage;
-
     public static String assignedDefectId;
 
     //methods bellow are used to reduce redundancy
@@ -48,9 +46,8 @@ public class BasicRunner extends AbstractTestNGCucumberTests {
         //an instance/object of the page class that locate
         // & initialize the web elements, passing in ...
         loginPage = new LoginPage(driver);
-
+        repetitiveMLSoC = new RepetitiveMethodsLinksSnippetsOfCode(driver);
         matrixPage = new MatrixPage(driver);
-
         testCasePage = new TestCasePage(driver);
     }
 

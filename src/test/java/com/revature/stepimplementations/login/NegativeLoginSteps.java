@@ -21,10 +21,8 @@ public class NegativeLoginSteps {
     @Then("The employee should see an alert saying {string}")
     public void the_employee_should_see_an_alert_saying_no_user_with_that_username_found(String expectedAlert) throws InterruptedException {
         Thread.sleep(1000);
-
         String actualAlert = BasicRunner.driver.switchTo().alert().getText();
 
         Assert.assertEquals(actualAlert, expectedAlert);
     }
-
 }

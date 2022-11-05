@@ -9,17 +9,12 @@ import org.testng.Assert;
 public class NavigationSteps {
 
     @Given("The manager is logged in as a manager")
-    public void the_manager_is_logged_in_as_a_manager() throws InterruptedException {
-        BasicRunner.driver.get("https://bugcatcher-jasdhir.coe.revaturelabs.com/?dev=2");
-        Thread.sleep(1000);
-        BasicRunner.loginPage.usernameIput.sendKeys("g8tor");
-        BasicRunner.loginPage.passwordInput.sendKeys("chomp!");
-        BasicRunner.loginPage.loginbutton.click();
+    public void the_manager_is_logged_in_as_a_manager() {
+        BasicRunner.repetitiveMLSoC.managerLogin();
     }
     @Given("The manager is on the home page")
     public void the_manager_is_on_the_home_page() throws InterruptedException {
         Thread.sleep(1000);
-
         String actualPage = BasicRunner.driver.getCurrentUrl();
         String expectedPage = "https://bugcatcher-jasdhir.coe.revaturelabs.com/managerhome";
 
@@ -27,28 +22,24 @@ public class NavigationSteps {
     }
     @Then("The manager should see links for {string}, {string}, {string} and {string}")
     public void the_manager_should_see_links_for_matrices_test_cases_defect_reporting_and_defect_overview(
-            String matrice, String testCase, String reportADefect, String defectOverview)
-            throws InterruptedException {
-        Thread.sleep(1000);
-
-        String actualLinks[] = {String.valueOf(BasicRunner.loginPage.matricesLink.getText()),
+            String matrice, String testCase, String reportADefect, String defectOverview) {
+        String[] actualLinks = {String.valueOf(BasicRunner.loginPage.matricesLink.getText()),
                 String.valueOf(BasicRunner.loginPage.testCasesLink.getText()),
                 String.valueOf(BasicRunner.loginPage.reportADefectLink.getText()),
                 String.valueOf(BasicRunner.loginPage.defectOverviewLink.getText())};
-        String expectedLinks[] = {matrice, testCase, reportADefect, defectOverview};
+        String[] expectedLinks = {matrice, testCase, reportADefect, defectOverview};
 
         Assert.assertEquals(actualLinks, expectedLinks);
     }
+
+    //scenario 2
     @When("The manager clicks on Matrices")
     public void the_manager_clicks_on_matrices() {
         BasicRunner.loginPage.matricesLink.click();
     }
-    @Then("The title of the page should be {string}")
-    public void the_title_of_the_page_should_be_matrix_page(String expectedPageTitle)
-            throws InterruptedException {
-        Thread.sleep(1000);
-
-        String actualPageTitle = BasicRunner.driver.getTitle();
+    @Then("The title of the page should be {string} page")
+    public void the_title_of_the_page_should_be_matrix_page(String expectedPageTitle) throws InterruptedException { String titleText = BasicRunner.driver.getTitle().trim();
+        String actualPageTitle = BasicRunner.driver.getTitle().replaceFirst(" Dashboard", "");
 
         Assert.assertEquals(actualPageTitle, expectedPageTitle);
     }
@@ -56,25 +47,20 @@ public class NavigationSteps {
     public void the_manager_clicks_the_browser_back_button() {
         BasicRunner.driver.navigate().back();
     }
-    @Then("The manager should be on the home page and the title of page is {string}")
-    public void the_manager_should_be_on_the_home_page_and_the_title_of_page_is_home(
-            String expectedTitle) throws InterruptedException {
-        String actualTitle = BasicRunner.driver.getTitle();
+    @Then("The manager should be on the home page and the title of page has {string} in the tile")
+    public void the_manager_should_be_on_the_home_page_and_the_title_of_page_has_home_in_the_tile(String expectedTitle) {
+        String actualTitle = BasicRunner.driver.getTitle().replaceFirst("Manager ", "");
 
-        if (actualTitle.contains(expectedTitle)) {
-            actualTitle = expectedTitle;
-
-            Thread.sleep(1000);
-
-            Assert.assertEquals(actualTitle, expectedTitle);
-        }
+        Assert.assertEquals(actualTitle, expectedTitle);
     }
     @When("The manager clicks on Test Cases")
     public void the_manager_clicks_on_test_cases() {
         BasicRunner.loginPage.testCasesLink.click();
     }
+
+    //scenario 3
     @When("The manager clicks on {string}")
-    public void the_manager_clicks_on(String link) throws InterruptedException {
+    public void the_manager_clicks_on(String link) {
         if (link.equals(BasicRunner.loginPage.matricesLink.getText())) {
             BasicRunner.loginPage.matricesLink.click();
         }
@@ -89,12 +75,9 @@ public class NavigationSteps {
         }
     }
     @Then("The title of page should be {string}")
-    public void the_title_of_page_should_be(String expectedTitle) throws InterruptedException {
-        Thread.sleep(1000);
-
+    public void the_title_of_page_should_be(String expectedTitle) {
         String actualTitle = BasicRunner.driver.getTitle();
 
         Assert.assertEquals(actualTitle, expectedTitle);
     }
-
 }

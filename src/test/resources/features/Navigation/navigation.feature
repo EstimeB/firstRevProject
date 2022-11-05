@@ -9,12 +9,12 @@ Feature: Navigation
 
   Scenario: Back Navigation
     When The manager clicks on Matrices
-    Then The title of the page should be "Matrix Page"
+    Then The title of the page should be "Matrix" page
     When The manager clicks the browser back button
-    Then The manager should be on the home page and the title of page is "Home"
+    Then The manager should be on the home page and the title of page has "Home" in the tile
     When The manager clicks on Test Cases
     When The manager clicks the browser back button
-    Then The manager should be on the home page and the title of page is "Home"
+    Then The manager should be on the home page and the title of page has "Home" in the tile
 
   Scenario Outline: All Links Viable
     Then The manager should see links for "Matrices", "Test Cases", "Report a Defect" and "Defect Overview"
